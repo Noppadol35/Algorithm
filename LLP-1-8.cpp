@@ -7,7 +7,7 @@ int main()
     int a[1000] = {0};
     int n;
     cin >> n;
-    int maxsum = 0;
+    int maxsum = -100000;
     int start = 0, end = 0;
 
     for (int i = 0; i < n; i++)
@@ -32,14 +32,7 @@ int main()
         }
     }
 
-    for (int i = start; i <= end; i++)
-    {
-        cout << a[i] << " ";
-    }
-
-    cout << endl;
-
-    cout << "Max sum is: " << maxsum << endl;
+    cout << maxsum << endl;
 
     return 0;
 }

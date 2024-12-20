@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int M = 100000; 
+const int n = 100000; 
 
 int main()
 {
@@ -9,7 +9,7 @@ int main()
     int N = 0;
     cin >> N;
 
-    int C[M+2] = {0};
+    int C[n+2] = {0};
 
     for (int i = 0; i < N; i++)
     {
@@ -24,7 +24,7 @@ int main()
     int start = 0;
     int end = 0;
 
-    for (int i = 0; i <= M; i++)
+    for (int i = 0; i <= n; i++)
     {
         line_C += C[i];
         if (line_C > max_C)

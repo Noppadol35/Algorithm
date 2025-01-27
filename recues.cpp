@@ -1,29 +1,18 @@
+#include <bits/stdc++.h>
 #include <iostream>
 using namespace std;
 
 int recues(int arr[], int n)
 {
-    if (n == 0)
-    {
-        return 0;
-    }
-
-    return arr[n - 1] + recues(arr, n - 1);
+    
 }
 
 int main()
 {
-    int n = 0;
-    cin >> n;
+    int arr[] = {35, 36, 37, 38, 39, 40, 41, 42, 43, 44};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int i = 0, j = n - 1;
 
-    int arr[] = {0};
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
-
-    int res = recues(arr, n);
-
-    cout << res << endl;
+    cout << recues(arr, n) << endl;
+    return 0;
 }

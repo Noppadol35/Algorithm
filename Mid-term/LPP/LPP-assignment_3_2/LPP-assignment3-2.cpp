@@ -8,9 +8,11 @@ int partition(int arr[], int l, int r)
     // if(arr[l] > arr[mid]) swap(arr[l], arr[mid]);
     // if(arr[l] > arr[r]) swap(arr[l], arr[r]);
     // if(arr[mid] > arr[r]) swap(arr[mid], arr[r]);
-    // swap(arr[r], arr[mid]);
-    int pivot = arr[r];
     
+    int pivot = arr[r];
+    //int pivot = arr[mid];
+    // swap(arr[r], arr[mid]);
+
     int i = l - 1;
     for (int j = l; j <= r; j++)
     {

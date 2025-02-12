@@ -2,52 +2,113 @@
 #include <iostream>
 using namespace std;
 
-int partition(int arr[], int l, int r)
+int partition(int a[], int l, int r, int pivots[], int &pivotCount)
 {
-    // int mid = (l + r)/2;
-    // if(arr[l] > arr[mid]) swap(arr[l], arr[mid]);
-    // if(arr[l] > arr[r]) swap(arr[l], arr[r]);
-    // if(arr[mid] > arr[r]) swap(arr[mid], arr[r]);
-    
-    int pivot = arr[r];
-    //int pivot = arr[mid];
-    // swap(arr[r], arr[mid]);
 
-    int i = l - 1;
-    for (int j = l; j <= r; j++)
+    int mid = (l + r) / 2;
+    if (a[l] > a[mid])
+        swap(a[l], a[mid]);
+    if (a[l] > a[r])
+        swap(a[l], a[r]);
+    if (a[mid] > a[r])
+        swap(a[mid], a[r]);
+    swap(a[r], a[mid]);
+    int pivot = a[r];
+
+    int i = l - 1, j = r;
+    while (1)
     {
-        if (arr[j] < pivot)
+        do
         {
             i++;
-            swap(arr[i], arr[j]);
-        }
+        } while (a[i] < pivot);
+
+        do
+        {
+            j--;
+        } while (j > l && a[j] > pivot);
+
+        if (i >= j)
+            break;
+
+        swap(a[i], a[j]);
     }
-    swap(arr[i + 1], arr[r]);
-    cout << (i + 1) << " ";
-    return i + 1;
+    swap(a[i], a[r]);
+    pivots[pivotCount++] = i + 1;
+    return i;
 }
 
-void quick_sort(int arr[], int l, int r)
+void quick_sort(int a[], int l, int r, int pivots[], int &pivotCount)
 {
     if (l < r)
     {
-        int p = partition(arr, l, r);
-        quick_sort(arr, l, p - 1);
-        quick_sort(arr, p + 1, r);
+        int p = partition(a, l, r, pivots, pivotCount);
+        quick_sort(a, l, p - 1, pivots, pivotCount);
+        quick_sort(a, p + 1, r, pivots, pivotCount);
     }
 }
 
 int main()
 {
-    int n = 8;
-    int arr[] = {16, 25, 2, 54, 36, 9, 12 ,66};
+    int n;
+    cin >> n;
 
-    quick_sort(arr, 0, n-1);
-
-    cout << endl;
-    for(int i =0; i < n; i++){
-        cout << arr[i] << " ";
+    if (n <= 1 || n >= 500)
+    {
+        return 0;
     }
+
+    int a[n];
+    for (int i = 0; i < n; i++)
+    {
+        if (!(cin >> a[i]))
+        {
+            return 0;
+        }
+        if (a[i] < -10000 || a[i] > 10000)
+        {
+            return 0;
+        }
+    }
+
+    if (n == 1)
+    {
+        cout << "1" << endl;
+        cout << a[0] << endl;
+        return 0;
+    }
+
+    int pivots[n];
+    int pivotCount = 0;
+
+    quick_sort(a, 0, n - 1, pivots, pivotCount);
+
+    bool isSorted = true;
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] < a[i - 1])
+        {
+            isSorted = false;
+            break;
+        }
+    }
+
+    if (!isSorted)
+    {
+        return 0;
+    }
+
+    for (int i = 0; i < pivotCount; i++)
+    {
+        cout << pivots[i] << " ";
+    }
+    cout << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
 
     return 0;
 }

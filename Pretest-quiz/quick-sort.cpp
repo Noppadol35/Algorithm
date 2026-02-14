@@ -20,8 +20,7 @@ int Partition(int arr[], int l, int r)
 
 void Quick_sort(int arr[], int l, int r)
 {
-    if (l < r)
-    {
+    if (l < r){
         int p = Partition(arr, l, r);
         Quick_sort(arr, l, p - 1);
         Quick_sort(arr, p + 1, r);

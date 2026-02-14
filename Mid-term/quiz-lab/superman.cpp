@@ -25,7 +25,7 @@ long long recuresiveBinaryFunction(long long low, long long high, long long targ
 int main(){
     long long target;
     cin >> target;
-    long long result = recuresiveBinaryFunction(1, 2000000000, target);
+    long long result = recuresiveBinaryFunction(1, 100100100100100, target);
     cout << result;
     return 0;
 }

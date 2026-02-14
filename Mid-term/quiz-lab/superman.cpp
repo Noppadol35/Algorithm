@@ -1,19 +1,45 @@
-#include<bits/stdc++.h>
 #include<iostream>
 using namespace std;
 
-int main (){
-    long long x;
-    cin >> x;
-    long long check = 1 + 8 * x;
-    long long sqrt_val = sqrt(check);
-    if(sqrt_val * sqrt_val == check){
-        int n = (-1 + sqrt_val) / 2;
-        if(n * (n + 1) / 2 == x){
-            cout << n << endl;
-            return 0;
-        }
+long long calculateSumation(long long n){
+    return (n*(n + 1)) / 2;
+}
+
+
+long long recuresiveBinaryFunction(long long low, long long high, long long target){
+    if(high < low){
+        return 0;
+    } 
+    long long mid = low + (high - low) / 2;
+    long long curentMid = calculateSumation(mid);
+
+    if(curentMid == target){
+        return mid;
+    } else if (curentMid > target) {
+        return recuresiveBinaryFunction(low, mid-1, target);
+    } else {
+        return recuresiveBinaryFunction(mid + 1, high, target);
     }
-    cout << 0 << endl;
+
+}
+int main(){
+    long long target;
+    cin >> target;
+    long long result = recuresiveBinaryFunction(1, 2000000000, target);
+    cout << result;
     return 0;
 }
+
+// logn long int target;
+    // cin >> target;
+    // int sum_temp = 0;
+    // int sum = 0;
+    // int i =0;
+    // while(sum_temp != target){
+    //     sum++;
+    //     sum_temp += sum;
+    //     i++;
+    // }
+    // cout << sum_temp;
+    // cout << endl;
+    // cout << i;

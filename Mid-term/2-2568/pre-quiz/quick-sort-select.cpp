@@ -24,21 +24,17 @@ void Quick_sort(int arr[], int l, int r){
 
 int quickSelect(int arr[], int l, int r, int k)
 {
-    if (l == r)
-    {
+    if (l == r){
         return arr[l];
     }
     int p = partition(arr, l, r);
-    if (k == p)
-    {
+    if (k == p){
         return arr[p];
     }
-    if (k < p)
-    {
+    if (k < p){
         return quickSelect(arr, l, p - 1, k);
     }
-    else
-    {
+    else{
         return quickSelect(arr, p + 1, r, k);
     }
 }

@@ -5,7 +5,6 @@ long long calculateSumation(long long n){
     return (n*(n + 1)) / 2;
 }
 
-
 long long recuresiveBinaryFunction(long long low, long long high, long long target){
     if(high < low){
         return 0;
@@ -25,7 +24,7 @@ long long recuresiveBinaryFunction(long long low, long long high, long long targ
 int main(){
     long long target;
     cin >> target;
-    long long result = recuresiveBinaryFunction(1, 2000000000, target);
+    long long result = recuresiveBinaryFunction(1, 10010010100100, target);
     cout << result;
     return 0;
 }

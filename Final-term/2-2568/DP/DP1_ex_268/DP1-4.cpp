@@ -3,28 +3,30 @@
 
 using namespace std;
 
+int memo[105][105];
+
+int productRelation(int n, int k, int productList[]) {
+    if(n == 0 || k == 0) return 0;
+    if(memo[n][k] != -1) return memo[n][k];
+
+    return memo[n][k] = max(productRelation(n - 1, k, productList), productRelation(n - 1, k - 1, productList ) + 1);
+}
+
 int main() {
     int n, k;
-    // รับค่าจำนวนสินค้าและเงินเริ่มต้น [cite: 41]
-    if (cin >> n >> k) {
-        vector<int> prices(n);
-        // รับราคาสินค้าแต่ละชิ้น [cite: 41]
-        for (int i = 0; i < n; ++i) {
-            cin >> prices[i];
-        }
+    cin >> n >> k;
 
-        vector<int> dp(k + 1, -1);
-        dp[0] = 0;
-
-        for (int i = 0; i < n; ++i) {
-            for (int j = k; j >= prices[i]; --j) {
-                if (dp[j - prices[i]] != -1) {
-                    dp[j] = max(dp[j], dp[j - prices[i]] + 1);
-                }
-            }
-        }
-        // แสดงจำนวนสินค้าที่มากที่สุด [cite: 42]
-        cout << (dp[k] == -1 ? 0 : dp[k]) << "\n";
+    int productList[100];
+    for (int i = 0; i < n; i++) {
+        cin >> productList[i];
     }
+
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= k; j++){
+            memo[i][j] = -1;
+        }
+    }
+
+    cout << productRelation(n, k, productList) << endl;
     return 0;
 }

@@ -1,22 +1,27 @@
 #include <iostream>
-#include <vector>
-
 using namespace std;
+
+int memo[1000][1000];
+
+int triger(int n, int m){
+    
+    if(n == 1 && m == 1) return 1;
+    if(n == 0) return 0;
+    if(m == 0) return 0;
+
+    return memo[n][m] = triger(m-1, n) + triger(m, n-1);
+}
 
 int main() {
     int n, m;
-    // รับค่า n และ m
-    if (cin >> n >> m) {
-        vector<vector<long long>> dp(n + 1, vector<long long>(m + 1, 0));
-        dp[1][1] = 1;
-        
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= m; ++j) {
-                if (i == 1 && j == 1) continue;
-                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-            }
+    cin >> n >> m;
+
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= m; j++){
+            memo[i][j] = -1;
         }
-        cout << dp[n][m] << "\n";
     }
+
+    cout << triger(n, m) << endl;
     return 0;
 }

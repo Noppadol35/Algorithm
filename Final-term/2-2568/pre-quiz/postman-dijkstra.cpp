@@ -65,6 +65,7 @@ int main(){
         int u, v, w;
         cin >> u >> v >> w;
         graph[u].push_back({v, w});
+        graph[v].push_back({u, w});
     }
 
     int result = Dijkstra(graph, n + 1, s, t);

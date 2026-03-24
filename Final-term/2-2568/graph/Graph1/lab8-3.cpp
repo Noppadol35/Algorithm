@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// ฟังก์ชัน BFS แบบจำกัดความลึก m
 int BFS(const vector<vector<int>> &graph, int V, int start, int m)
 {
     vector<int> dist(V + 1, -1);

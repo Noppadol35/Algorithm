@@ -17,12 +17,11 @@ int BFS(const vector<vector<int>> &graph, int V, int start, int m)
         int current = q.front();
         q.pop();
 
-        // ถ้าถึงระดับ m แล้ว ไม่ต้องขยายต่อ
-        if (dist[current] == m)
-            continue;
+        if (dist[current] == m)continue;
 
-        for (int neighbor : graph[current])
+        for (int i = 0; i < graph[current].size(); i++)
         {
+            int neighbor = graph[current][i];
             if (dist[neighbor] == -1)
             {
                 dist[neighbor] = dist[current] + 1;
@@ -31,7 +30,6 @@ int BFS(const vector<vector<int>> &graph, int V, int start, int m)
         }
     }
 
-    // นับ vertex ที่ไม่ครอบคลุม
     int countUncovered = 0;
     for (int i = 1; i <= V; i++)
     {

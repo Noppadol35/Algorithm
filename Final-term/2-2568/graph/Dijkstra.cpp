@@ -1,75 +1,69 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
-#define inf 500000
-#define FALSE -1
-#define TRUE 1
+const int INF = 1e9;
 
-// 1. Pass the dynamic size 'V' and use const references for vectors
-int minDistance(const vector<int>& dist, const vector<int>& inTree, int V){
-    int min = inf, min_index = -1;
-
-    for(int v = 0; v < V; v++){
-        if(inTree[v] == FALSE && dist[v] <= min){
-            min = dist[v];
-            min_index = v;
-        }
-    }
-    return min_index;
-}
-
-// 2. Accept a 2D vector instead of a C-style array
-void Dijkstra(const vector<vector<int>>& graph, int src){
-    int V = graph.size(); // Extract the exact number of vertices dynamically
-    
-    // 3. Use vectors for internal state to match the dynamic size
-    vector<int> dist(V, inf);
-    vector<int> inTree(V, FALSE);
+int Dijkstra(vector<vector<pair<int, int>>>& graph, int V, int startVertex, int dst)
+{
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    vector<int> dist(V, INF);
     vector<int> parent(V, -1);
+    vector<bool> inTree(V, false);
 
-    dist[src] = 0;
-    
-    for(int i = 0; i < V - 1; i++){
-        int u = minDistance(dist, inTree, V);
-        
-        // Safety check: if u is -1, the remaining vertices are unreachable
-        if (u == -1) break; 
+    pq.push({0, startVertex});
+    dist[startVertex] = 0;
+    while (!pq.empty())
+    {
+        int u = pq.top().second;
+        inTree[u] = true;
+        pq.pop();
 
-        inTree[u] = TRUE;
-        
-        for(int v = 0; v < V; v++){
-            // Added graph[u][v] != inf to prevent integer overflow when adding
-            if(inTree[v] == FALSE && graph[u][v] != inf && dist[u] + graph[u][v] < dist[v]){
-                dist[v] = dist[u] + graph[u][v];
+        for (int i = 0; i < graph[u].size(); i++)
+        {
+            int v = graph[u][i].first;
+            int weight = graph[u][i].second;
+            if (!inTree[v] && dist[u] + weight < dist[v])
+            {
+                dist[v] = dist[u] + weight;
                 parent[v] = u;
+                pq.push({dist[v], v});
             }
         }
     }
 
-    // Optional: Print the results to verify it works
-    cout << "\nVertex \t Distance from Source" << endl;
-    for (int i = 0; i < V; i++) {
-        cout << i << " \t\t " << dist[i] << endl;
+    vector<int> path;
+    for(int i = dst; i != -1; i = parent[i]){
+        path.push_back(i);
     }
+    reverse(path.begin(), path.end());
+    for(int i = 0; i < path.size(); i++){
+        cout << path[i] << " ";
+    }
+    cout << endl;
+    return dist[dst];
 }
 
-int main(){
-    int n_vertex, n_edge;
-    cout << "Enter number of vertices and edges: ";
-    cin >> n_vertex >> n_edge;
+int main()
+{
+    int n, e;
+    cin >> n >> e;
 
-    // Creates an n_vertex by n_vertex matrix initialized to 'inf'
-    vector<vector<int>> adj_matrix(n_vertex, vector<int>(n_vertex, inf));
-
-    cout << "Enter edges (u v weight):" << endl;
-    for(int i = 0; i < n_edge; i++){
-        int u, v, w;
-        cin >> u >> v >> w;
-        adj_matrix[u][v] = w; 
+    vector<vector<pair<int, int>>> adj_list(n + 1);
+    for (int i = 0; i < e; i++)
+    {
+        int start, destination, weight;
+        cin >> start >> destination >> weight;
+        adj_list[start].push_back({destination, weight});
     }
 
-    Dijkstra(adj_matrix, 0);
+    int src, dst;
+    cin >> src >> dst;
+
+    int result = Dijkstra(adj_list, n, src, dst);
+    cout << result << endl;
+
     return 0;
 }

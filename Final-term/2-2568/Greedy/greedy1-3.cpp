@@ -15,7 +15,7 @@ int trainMinPlatforms(vector<timeAndDeparture>& trains, int n){
         arrivalTimes.push_back(trains[i].arrival);
         departureTimes.push_back(trains[i].departure);
     }
-    sort(arrivalTimes.begin(), arrivalTimes.end());
+    sort(arrivalTimes.begin(), arrivalTimes.end()); 
     sort(departureTimes.begin(), departureTimes.end());
 
     int platforms = 0, minPlatforms = 0;
